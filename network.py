@@ -5,9 +5,12 @@ HEADER = 16
 FORMAT = "utf-8"
 
 class Network:
-	def __init__(self, conn: socket.socket, addr):
+	def __init__(self, conn, addr):
 		self.conn = conn
-		self.addr = addr
+		self._addr = addr
+
+	def getAddress(self):
+		return self._addr
 
 	def listen(self):
 		msg_length = self.conn.recv(HEADER).decode(FORMAT)

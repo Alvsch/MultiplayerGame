@@ -1,18 +1,15 @@
-import pygame.draw
+import pygame
 
 
 class Player:
-	width = height = 50
-
-	def __init__(self, name, x=0, y=0, color=(0,0,255)):
+	def __init__(self, name, width, height, color=(0, 0, 255)):
 		self.name = name
-		self.x = x
-		self.y = y
+		self.x = 0
+		self.y = 0
 		self.color = color
+		self.width = width
+		self.height = height
 		self.velocity = 10
-
-	def draw(self, screen):
-		pygame.draw.rect(screen, self.color, (self.x, self.y, self.width, self.height), 0)
 
 	def move(self, move):
 		if move == "w":
@@ -24,20 +21,41 @@ class Player:
 		elif move == "d":
 			self.x += self.velocity
 
+	def draw(self, screen):
+		pygame.draw.rect(screen, self.color, (self.x, self.y, self.width, self.height), 0)
+
 
 class Game:
 	def __init__(self):
 		self.players = []
 
-	def addPlayer(self, p: Player):
+	def addPlayer(self, p):
 		self.players.append(p)
 
-	def updatePlayer(self, p: Player):
+	def updatePlayer(self, p):
 		for i, v in enumerate(self.players):
 			if v.name == p.name:
 				self.players[i] = p
 				break
 
-	def draw_players(self, screen):
-		for i in self.players:
-			i.draw(screen)
+	def removePlayer(self, p):
+		self.players.remove(p)
+
+	def draw(self, screen):
+		for p in self.players:
+			p.draw(screen)
+
+
+class Screen:
+	def __init__(self, width, height, name="None"):
+		self.width = width
+		self.height = height
+		self.screen = pygame.display.set_mode((width, height))
+		pygame.display.set_caption(name)
+
+	@staticmethod
+	def update():
+		pygame.display.update()
+
+	def getScreen(self):
+		return self.screen

@@ -1,6 +1,5 @@
 import socket
 from network import Network
-from game import *
 import pygame
 
 

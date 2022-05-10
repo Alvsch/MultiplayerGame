@@ -1,50 +1,35 @@
 import socket
-from network import Network
 import threading
-from game import *
+
+from game import Game
+from network import *
 
 IP = socket.gethostbyname(socket.gethostname())
+
 PORT = 5050
 ADDR = (IP, PORT)
 
 server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 server.bind(ADDR)
 
-game = Game()
 connections = 0
+game = Game()
 
-def handle_client(n: Network):
+def handle_client(network: Network):
 	global game, connections
-	print(f"Client Connected From Address {n.addr}")
+	print(f"New Connection From {network.getAddress()}")
 
-	p = Player(str(connections), color=(255, 0, 0))
-	game.addPlayer(p)
-	n.send(p)
+	connections += 1
+
 	while True:
-		try:
-			n.send(game)
-			p = n.listen()
-			game.updatePlayer(p)
-		except:
-			break
-	print(f"Connected Lost: {ADDR}")
-	n.conn.close()
-
+		network.send(game)
 
 
 server.listen()
-print(f"Server Hosting At IP: {IP}, On Port: {PORT}")
+print(f"Started Server On IP: {IP} and PORT: {PORT}")
 
 while True:
-	try:
-		conn, addr = server.accept()
-		n = Network(conn ,addr)
-		connections += 1
+	conn, addr = server.accept()
+	network = Network(conn, addr)
 
-		thread = threading.Thread(target=handle_client, args=(n,))
-		thread.start()
-
-	except KeyboardInterrupt:
-		print("Server Closed")
-		server.close()
-		exit()
+	thread = threading.Thread(target=handle_client, args=(network,))

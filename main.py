@@ -1,8 +1,10 @@
 import game
+import server
+
 mode = input("Join/Create: ")
 if mode.lower() == "join":
-	import client
+	pass
 elif mode.lower() == "create":
-	import server
+	pass
 else:
 	print("Not a valid choice")
