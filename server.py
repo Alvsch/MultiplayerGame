@@ -1,7 +1,7 @@
 import socket
 import threading
 
-from game import Game
+from game import *
 from network import *
 
 IP = socket.gethostbyname(socket.gethostname())
@@ -15,12 +15,13 @@ server.bind(ADDR)
 connections = 0
 game = Game()
 
-def handle_client(network: Network):
+def handle_client(net: Network):
 	global game, connections
 	print(f"New Connection From {network.getAddress()}")
 
 	connections += 1
 
+	net.send(Player(f"player{str(connections)}", 50, 50))
 	while True:
 		network.send(game)
 

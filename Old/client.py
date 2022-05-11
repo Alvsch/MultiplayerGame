@@ -30,7 +30,7 @@ pygame.display.set_caption("GAME")
 
 clock = pygame.time.Clock()
 
-n = Network(client, IP)
+n = Network(client, ADDR)
 player = n.listen()
 while True:
 	clock.tick(FPS)

@@ -1,15 +1,16 @@
 import pygame
+from network import *
 
 
 class Player:
+	width = height = 50
+
 	def __init__(self, name, width, height, color=(0, 0, 255)):
 		self.name = name
 		self.x = 0
 		self.y = 0
 		self.color = color
-		self.width = width
-		self.height = height
-		self.velocity = 10
+		self.velocity = 5
 
 	def move(self, move):
 		if move == "w":
@@ -41,7 +42,7 @@ class Game:
 	def removePlayer(self, p):
 		self.players.remove(p)
 
-	def draw(self, screen):
+	def draw(self, screen, color):
 		for p in self.players:
 			p.draw(screen)
 
@@ -59,3 +60,6 @@ class Screen:
 
 	def getScreen(self):
 		return self.screen
+
+	def draw_background(self):
+		self.screen.fill((255, 255, 255))
