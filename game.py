@@ -42,7 +42,7 @@ class Game:
 	def removePlayer(self, p):
 		self.players.remove(p)
 
-	def draw(self, screen, color):
+	def draw(self, screen):
 		for p in self.players:
 			p.draw(screen)
 

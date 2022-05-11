@@ -1,8 +1,9 @@
 import pygame
+import socket
 
 from game import *
-import socket
 from network import *
+
 
 IP = input("IPV4: ")
 PORT = int(input("PORT: "))

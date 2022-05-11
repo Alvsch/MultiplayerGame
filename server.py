@@ -24,6 +24,8 @@ def handle_client(net: Network):
 	net.send(Player(f"player{str(connections)}", 50, 50))
 	while True:
 		network.send(game)
+		p = network.listen()
+		game.updatePlayer(p)
 
 
 server.listen()
@@ -34,3 +36,4 @@ while True:
 	network = Network(conn, addr)
 
 	thread = threading.Thread(target=handle_client, args=(network,))
+	thread.start()
